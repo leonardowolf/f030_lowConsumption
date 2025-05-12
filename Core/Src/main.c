@@ -200,9 +200,19 @@ static void MX_GPIO_Init(void)
                            PA4 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
                           |GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_1_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

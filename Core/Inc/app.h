@@ -11,6 +11,12 @@
 #include "main.h"
 #include <stdint.h>
 
+extern SPI_HandleTypeDef hspi1;
+
+//extern TIM_HandleTypeDef htim14;
+
+void Systick_Custom_Callback(void);
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 uint8_t app_start();
 
 #endif /* INC_APP_H_ */
