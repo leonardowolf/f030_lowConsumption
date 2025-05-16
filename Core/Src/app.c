@@ -6,6 +6,8 @@
  */
 
 #include "app.h"
+uint16_t hsCntr[] = {0,0,0,0,0};
+uint8_t TX_Buffer [] = "Hi!" ;
 
 ///**
 // * @brief myprintf: prints strings on the defined uart
@@ -37,26 +39,33 @@
 void Systick_Custom_Callback(void){
 	static uint16_t iter = 0;
 	if(++iter > 60000){
-		__NOP();//this counts each 1 minute to do something... its doing nothing now :D
+//		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9,GPIO_PIN_RESET);
+		HAL_SPI_Transmit( &hspi1 , TX_Buffer , 3 , 100 );
+//		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9,GPIO_PIN_SET);
+//		HAL_Delay ( 1000 );
+		iter = 0;
 	}
 }
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_0) {
+	  hsCntr[0]++;
   }else if(GPIO_Pin == GPIO_PIN_1) {
+	  hsCntr[1]++;
   }else if(GPIO_Pin == GPIO_PIN_2) {
+	  hsCntr[2]++;
   }else if(GPIO_Pin == GPIO_PIN_3) {
+	  hsCntr[3]++;
   }else if(GPIO_Pin == GPIO_PIN_4) {
+	  hsCntr[4]++;
   } else {
       __NOP();
   }
 }
 
 uint8_t app_start(){
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-//	HAL_Delay(1000);
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-//	HAL_Delay(1000);
-    return 0;
+	HAL_SPI_Transmit( &hspi1 , TX_Buffer , 3 , 1000 );
+	HAL_Delay ( 100 );
+	return 0;
 }
 
